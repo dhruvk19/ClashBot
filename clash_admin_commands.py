@@ -48,14 +48,21 @@ class Clash(commands.Cog):
             await ctx.send(f'invalid tag: {tag}')
 
         res = clash_commands.Clash.get_clan(tag[1:])
-        print('len:', len(res))
         if len(res) == 1:
             # error
             embed=discord.Embed(title = res['reason'], description = 'confirm the tag and try again', color = 0xFF0000)
             await ctx.send(embed=embed)
         else:
             # 200
-            embed=discord.Embed(title = res['name'], description = 'desc', color = 0x7CFC00)
+            embed=discord.Embed(
+                title = res['name'],
+                description = res['description'] + '\n\n' + f'Members: {res["members"]}/50',
+                color = 0x7CFC00,
+                url=f'https://link.clashofclans.com/en?action=OpenClanProfile&tag=%23{res["tag"][1:]}'
+            )
+            embed.set_thumbnail(url=res['badgeUrls']['medium'])
+            embed.set_footer(text = f'{version}')
+                
             await ctx.send(embed=embed)
 
     @commands.command()
