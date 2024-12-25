@@ -18,7 +18,7 @@ class Admin(commands.Cog):
         await msg3.edit(embed=msg2)
 
     @commands.command()
-    async def clear(ctx, amount=5):
+    async def clear(self, ctx, amount=5):
         """Clear set amout of messagess."""
         await ctx.channel.purge(limit=amount+1)
 
